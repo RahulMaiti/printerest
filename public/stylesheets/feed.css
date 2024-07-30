@@ -131,3 +131,17 @@ img:hover {
         columns: 1;
     }
 }
+.box .save-button {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    padding: 10px 20px;
+    background-color: rgba(250, 8, 8, 0.8);
+    border: 1px solid #ccc;
+    cursor: pointer;
+    -webkit-text-fill-color: #fff;
+}
+.box:hover img { filter: blur(4px); }
+.box:hover .save-button { display: block; }

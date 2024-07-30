@@ -56,9 +56,10 @@
       <a href="/logout" class="button">Logout</a>
 
       <div class="uploadingField">
-        <form action="/upload" method="post" enctype="multipart/form-data">
+        <form id="uploadform" action="/upload" method="post" enctype="multipart/form-data">
           <input class="btn temp" type="text" name="imageText" placeholder="Caption of image....">
-          <input class="btn" type="file" name="file">
+          <input class="btn" id="imageinp" hidden type="file" name="file">
+          <input id="button"  class="btn upload" type="button" value="Select File">
           <input class="btn upload" type="submit" value="upload">
         </form>
       </div>
@@ -68,7 +69,7 @@
     <div class="main">
       <% user.posts.forEach(function(post){ %>
         <div class="cardBox"> 
-          <img src="/images/uploads/<%= post.image %>" alt="img">
+          <img src="/images/uploads/uploads/<%= post.image %>" alt="img">
           <div class="caption">
             <%= post.imageText%>
           </div> 
@@ -78,6 +79,11 @@
     </div>
   </div>
   </div>
+  <script>
+     document.querySelector("#button").addEventListener("click", ()=>{
+      document.querySelector("#uploadform #imageinp").click();
+     })
+  </script>
 </body>
 
 </html>

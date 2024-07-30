@@ -5,10 +5,11 @@ const postModel = require("./post");
 const passport = require("passport");
 const localStrategy = require("passport-local");
 passport.use(new localStrategy(userModel.authenticate()));
-const upload = require("./mutler")
+const upload = require("./mutler");
+const users = require("./users");
 
 router.get("/", function (req, res, next) {
-  res.render("signup");
+  res.render("singup");
 });
 
 router.get("/login",   function (req, res, next) {
@@ -41,8 +42,10 @@ router.post("/upload", isLoggedIn, upload.single("file"), async function (req, r
   }
 });
 
-router.get("/feed", isLoggedIn, (req, res) => {
-  res.render("feed");
+router.get("/feed", isLoggedIn, async(req, res) => {
+  let posts=await postModel.find().populate("user");
+ let user= await userModel.findOne({username: req.session.passport.user}) 
+  res.render("feed",{posts,user});
 })
 
 router.get("/profile", isLoggedIn, async (req, res) => { 
