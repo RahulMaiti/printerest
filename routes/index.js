@@ -47,6 +47,22 @@ router.get("/feed", isLoggedIn, async(req, res) => {
  let user= await userModel.findOne({username: req.session.passport.user}) 
   res.render("feed",{posts,user});
 })
+router.post("/feed/save", async (req, res) => {
+  const postId = req.body.postId;
+  const username = req.session.passport.user;
+  
+
+  try {
+      let user = await userModel.findOne({_id:username });
+      if (!user.posts.includes(postId)) {
+          user.posts.push(postId);
+          await user.save();
+      }
+      res.status(200).send({ message: 'Post saved successfully' });
+  } catch (error) {
+      res.status(500).send({ message: 'Error saving post' });
+  }
+});
 
 router.get("/profile", isLoggedIn, async (req, res) => { 
   const user = await userModel.findById(req.user._id).populate("posts"); 
